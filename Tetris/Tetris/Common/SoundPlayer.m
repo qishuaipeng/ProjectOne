@@ -8,6 +8,7 @@
 
 #import "SoundPlayer.h"
 #import <AVFoundation/AVFoundation.h>
+#import "ReactiveObjC.h"
 
 @interface SoundPlayer ()
 
@@ -20,7 +21,7 @@
  */
 static NSMutableDictionary *_soundIDs;
 
-- (void)dealloc {
++ (void)removeSoundIDs {
     [_soundIDs enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         [self.class disposeSound:key];
     }];
@@ -34,16 +35,37 @@ static NSMutableDictionary *_soundIDs;
     [session setCategory:AVAudioSessionCategoryAmbient error:nil];
     //激活会话
     [session setActive:YES error:nil];
+    
+    [RACObserve(K_PublicInformation, sound) subscribeNext:^(id  _Nullable x) {
+        if (!K_PublicInformation.sound) {
+            [self removeSoundIDs];
+        }
+    }];
 }
 
 + (void)tetrisMoveSoundPlaying {
-    [self playSound:@"SEB_mino1"];
+    [self playSound:@"MOVE_SOUND.mp3"];
+}
++ (void)tetrisDownSoundPlaying {
+    [self playSound:@"BRICK_FINISHEDMOVE.mp3"];
 }
 + (void)tetrisRotationSoundPlaying {
-    [self playSound:@"SEB_mino4"];
+    [self playSound:@"ROTATE_SOUND.mp3"];
 }
 + (void)tetrisRemoveSoundPlaying {
-    [self playSound:@"SEB_platinum"];
+    [self playSound:@"EXPLOSION.mp3"];
+}
++ (void)tetrisNewSoundPlaying {
+    [self playSound:@"NEW_LEVEL.mp3"];
+}
++ (void)tetrisBeginSoundPlaying {
+    [self playSound:@"ENGINE.wav"];
+}
++ (void)tetrisOverSoundPlaying {
+    [self playSound:@"GAME_OVER.mp3"];
+}
++ (void)tetrisPhysicalSoundPlaying {
+    [self playSound:@"PHYSICAL_BUTTON_SOUND.mp3"];
 }
 
 /**
@@ -57,7 +79,7 @@ static NSMutableDictionary *_soundIDs;
         return;
     }
     SystemSoundID soundID = [self achieveSoundID:fileName];
-    if (soundID) {
+    if (soundID && K_PublicInformation.sound) {
         AudioServicesPlaySystemSound(soundID);
     }
 }
@@ -102,7 +124,11 @@ static NSMutableDictionary *_soundIDs;
     SystemSoundID soundID;
     //加载音效文件
     NSURL *url = [[NSBundle mainBundle] URLForResource:fileName withExtension:nil];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef _Nonnull)url, &soundID);
+    OSStatus error = AudioServicesCreateSystemSoundID((__bridge CFURLRef _Nonnull)url, &soundID);
+    if (error != kAudioSessionNoError) {
+        DebugLog(@"----------error:%i", (int)error);
+    }
+    
     [_soundIDs setValue:@(soundID) forKey:fileName];
 
     return soundID;

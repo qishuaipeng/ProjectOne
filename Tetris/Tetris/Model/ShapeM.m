@@ -29,7 +29,8 @@
     return self;
 }
 - (void)nextRandom {
-    [self nextWithType:arc4random()%2 == 0 ? arc4random()%7 : arc4random()%6 andDirection:arc4random()%4];
+    ShapeMType type = arc4random()%7;
+    [self nextWithType:type == ShapeMType6 ? (arc4random()%2 == 0 ? type : arc4random()%7) : type andDirection:arc4random()%4];
 }
 - (void)nextWithType:(ShapeMType)type andDirection:(ShapeMDirection)direction {
     _type = _nextType;

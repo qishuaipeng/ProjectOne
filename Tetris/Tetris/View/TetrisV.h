@@ -24,5 +24,6 @@
 - (void)start;
 - (void)pause;
 - (void)newStart;
+- (void)reset;
 
 @end

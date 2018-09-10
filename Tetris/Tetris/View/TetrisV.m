@@ -8,6 +8,7 @@
 
 #import "TetrisV.h"
 #import "ElementV.h"
+#import "SoundPlayer.h"
 
 @interface TetrisV ()
 
@@ -168,6 +169,14 @@ static NSInteger timeCount = 0;
                 } else if ([self canRotation:[NSIndexPath indexPathForRow:self.vm.location.row + 1 inSection:self.vm.location.section] distanceH:4 andDistanceV:4]) {
                     [self.vm.shapeM rotation];
                     self.vm.location = [NSIndexPath indexPathForRow:self.vm.location.row + 1 inSection:self.vm.location.section];
+                    [self transformShape];
+                } else if ([self canRotation:[NSIndexPath indexPathForRow:self.vm.location.row - 1 inSection:self.vm.location.section] distanceH:4 andDistanceV:4]) {
+                    [self.vm.shapeM rotation];
+                    self.vm.location = [NSIndexPath indexPathForRow:self.vm.location.row - 1 inSection:self.vm.location.section];
+                    [self transformShape];
+                } else if ([self canRotation:[NSIndexPath indexPathForRow:self.vm.location.row - 2 inSection:self.vm.location.section] distanceH:4 andDistanceV:4]) {
+                    [self.vm.shapeM rotation];
+                    self.vm.location = [NSIndexPath indexPathForRow:self.vm.location.row - 2 inSection:self.vm.location.section];
                     [self transformShape];
                 }
             } else {
@@ -335,6 +344,7 @@ static NSInteger timeCount = 0;
             self.vm.location = indexPath;
             [self transformShape];
         } else {
+            [SoundPlayer tetrisDownSoundPlaying];
             //变更完成的数据
             for (NSInteger index = 0; index < 4; index++) {
                 NSIndexPath *element = [self.vm.shapeM indexPathWithIndex:index];
@@ -374,6 +384,8 @@ static NSInteger timeCount = 0;
                 
                 //添加消除动画
                 self.vm.removeAnimating = YES;
+                //播放声音
+                [SoundPlayer tetrisRemoveSoundPlaying];
                 [UIView animateKeyframesWithDuration:0.8 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
                     [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
                         for (id section in solidSections) {
@@ -459,18 +471,18 @@ static NSInteger timeCount = 0;
         
         //创建形状
         [self creatShapes];
+    } else {
+        [SoundPlayer tetrisOverSoundPlaying];
     }
 }
 - (void)start {
-    if (self.vm.type == TetrisVMTypeOver) {
-        [self newStart];
-    } else if (self.vm.type != TetrisVMTypePlaying) {
-        timeCount = 0;
-        self.vm.type = TetrisVMTypePlaying;
-        if (self.shapes.count == 0) {
-            [self creatShapes];
-        }
+    if (self.vm.type != TetrisVMTypePaused && self.shapes.count == 0) {
+        [self reset];
+        [self creatShapes];
     }
+    
+    timeCount = 0;
+    self.vm.type = TetrisVMTypePlaying;
 }
 - (void)pause {
     if (self.vm.type == TetrisVMTypePlaying) {
@@ -478,6 +490,10 @@ static NSInteger timeCount = 0;
     }
 }
 - (void)newStart {
+    [self reset];
+    [self start];
+}
+- (void)reset {
     for (NSArray *arr in self.vm.sourceData) {
         for (SourceM *sourceM in arr) {
             sourceM.solid = NO;
@@ -487,11 +503,14 @@ static NSInteger timeCount = 0;
     self.vm.removeAnimating = NO;
     self.vm.score = 0;
     self.vm.speed = 1;
-    [self.shapes removeAllObjects];
     
+    [self clearShape];
     [self.vm.shapeM nextRandom];
     self.vm.type = TetrisVMTypePrepare;
-    [self start];
+}
+- (void)clearShape {
+    [self.shapes makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.shapes removeAllObjects];
 }
 
 @end

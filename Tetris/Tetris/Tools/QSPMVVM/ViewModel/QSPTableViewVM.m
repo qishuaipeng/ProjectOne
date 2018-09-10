@@ -38,10 +38,13 @@
 
 @implementation QSPTableViewVM
 
-+ (void)create:(void (^)(QSPTableViewVM *vm))block {
++ (instancetype)create:(void (^)(QSPTableViewVM *vm))block {
+    QSPTableViewVM *vm = [[QSPTableViewVM alloc] init];
     if (block) {
-        block([[QSPTableViewVM alloc] init]);
+        block(vm);
     }
+    
+    return vm;
 }
 - (instancetype)init {
     if (self = [super init]) {

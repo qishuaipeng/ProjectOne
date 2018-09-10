@@ -11,7 +11,12 @@
 @interface SoundPlayer : NSObject
 
 + (void)tetrisMoveSoundPlaying;
++ (void)tetrisDownSoundPlaying;
 + (void)tetrisRotationSoundPlaying;
 + (void)tetrisRemoveSoundPlaying;
++ (void)tetrisNewSoundPlaying;
++ (void)tetrisBeginSoundPlaying;
++ (void)tetrisOverSoundPlaying;
++ (void)tetrisPhysicalSoundPlaying;
 
 @end

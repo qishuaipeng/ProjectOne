@@ -57,7 +57,7 @@
     CGFloat scale = 0.6;
     UIGraphicsBeginImageContext(CGSizeMake(K_TetrisElementW, K_TetrisElementW));
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGFloat W = SW*scale;
+    CGFloat W = (int)(SW*scale);
     CGFloat H = W;
     CGFloat X = (SW - W)/2.0;
     CGFloat Y = (SH - H)/2.0;
@@ -67,7 +67,7 @@
     CGContextFillPath(context);
     
     UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, SW, SH) cornerRadius:0];//(1 - scale)*SW/2.0
-    path.lineWidth = 2;
+    path.lineWidth = (int)(SW*0.2);
     [path stroke];
     
     UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();

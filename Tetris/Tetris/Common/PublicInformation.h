@@ -11,6 +11,9 @@
 @interface PublicInformation : BaseM
 @property (strong, nonatomic, readonly) UIImage *elementImage;
 @property (assign, nonatomic) NSInteger highestScore;
+@property (assign, nonatomic) BOOL sound;
+@property (assign, nonatomic) BOOL noFirst;
+@property (assign, nonatomic) NSInteger beginSpeed;
 
 + (instancetype)shareInstance;
 - (void)clear;

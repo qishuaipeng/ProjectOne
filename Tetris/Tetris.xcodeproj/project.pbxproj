@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		18DA9488213866C800070133 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DA9487213866C800070133 /* SoundPlayer.m */; };
+		6E0FFBC8214126C5003FF3D6 /* SelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0FFBC7214126C4003FF3D6 /* SelectViewController.m */; };
+		6E0FFBCB214126E3003FF3D6 /* SelectVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0FFBCA214126E3003FF3D6 /* SelectVM.m */; };
+		6EFB03B5213F70CC00A5BF69 /* OverImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB03B4213F70CC00A5BF69 /* OverImage.plist */; };
+		6EFB03B7213F70F000A5BF69 /* PrepareImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB03B6213F70F000A5BF69 /* PrepareImage.plist */; };
 		6EFFDBE221324EE0008A87F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFFDBE121324EE0008A87F3 /* AppDelegate.m */; };
 		6EFFDBE521324EE0008A87F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFFDBE421324EE0008A87F3 /* ViewController.m */; };
 		6EFFDBE821324EE0008A87F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDBE621324EE0008A87F3 /* Main.storyboard */; };
@@ -59,6 +63,21 @@
 		6EFFDCBD2138189F008A87F3 /* SEB_mino7.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCB52138189F008A87F3 /* SEB_mino7.wav */; };
 		6EFFDCBE2138189F008A87F3 /* SEB_mino5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCB62138189F008A87F3 /* SEB_mino5.wav */; };
 		6EFFDCBF2138189F008A87F3 /* SEB_mino4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCB72138189F008A87F3 /* SEB_mino4.wav */; };
+		6EFFDCCC2138E89F008A87F3 /* GAME_OVER.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCC12138E89F008A87F3 /* GAME_OVER.mp3 */; };
+		6EFFDCCD2138E89F008A87F3 /* REMOVE_LINE.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCC22138E89F008A87F3 /* REMOVE_LINE.mp3 */; };
+		6EFFDCCE2138E89F008A87F3 /* EXPLOSION.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCC32138E89F008A87F3 /* EXPLOSION.mp3 */; };
+		6EFFDCCF2138E89F008A87F3 /* ENGINE.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCC42138E89F008A87F3 /* ENGINE.wav */; };
+		6EFFDCD02138E89F008A87F3 /* NEW_LEVEL.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCC52138E89F008A87F3 /* NEW_LEVEL.mp3 */; };
+		6EFFDCD12138E89F008A87F3 /* PHYSICAL_BUTTON_SOUND.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCC62138E89F008A87F3 /* PHYSICAL_BUTTON_SOUND.mp3 */; };
+		6EFFDCD22138E89F008A87F3 /* SIGNAL2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCC72138E89F008A87F3 /* SIGNAL2.mp3 */; };
+		6EFFDCD32138E89F008A87F3 /* SIGNAL1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCC82138E89F008A87F3 /* SIGNAL1.mp3 */; };
+		6EFFDCD42138E89F008A87F3 /* BRICK_FINISHEDMOVE.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCC92138E89F008A87F3 /* BRICK_FINISHEDMOVE.mp3 */; };
+		6EFFDCD52138E89F008A87F3 /* ROTATE_SOUND.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCCA2138E89F008A87F3 /* ROTATE_SOUND.mp3 */; };
+		6EFFDCD62138E89F008A87F3 /* MOVE_SOUND.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6EFFDCCB2138E89F008A87F3 /* MOVE_SOUND.mp3 */; };
+		6EFFDCD9213B0F0A008A87F3 /* SetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFFDCD8213B0F0A008A87F3 /* SetViewController.m */; };
+		6EFFDCDC213B0F2C008A87F3 /* SetVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFFDCDB213B0F2C008A87F3 /* SetVM.m */; };
+		6EFFDCDF213B14A6008A87F3 /* CellM.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFFDCDE213B14A6008A87F3 /* CellM.m */; };
+		6EFFDCE5213B1C5E008A87F3 /* SetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFFDCE4213B1C5E008A87F3 /* SetTableViewCell.m */; };
 		D57CB424F2AD206CCF2640DC /* libPods-Tetris.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A10DC0A5C74E2651D567D786 /* libPods-Tetris.a */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +85,12 @@
 		18DA9486213866C800070133 /* SoundPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundPlayer.h; sourceTree = "<group>"; };
 		18DA9487213866C800070133 /* SoundPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoundPlayer.m; sourceTree = "<group>"; };
 		3E334A6294BE68DC8EC53EBB /* Pods-Tetris.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tetris.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tetris/Pods-Tetris.release.xcconfig"; sourceTree = "<group>"; };
+		6E0FFBC6214126C4003FF3D6 /* SelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectViewController.h; sourceTree = "<group>"; };
+		6E0FFBC7214126C4003FF3D6 /* SelectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectViewController.m; sourceTree = "<group>"; };
+		6E0FFBC9214126E3003FF3D6 /* SelectVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectVM.h; sourceTree = "<group>"; };
+		6E0FFBCA214126E3003FF3D6 /* SelectVM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectVM.m; sourceTree = "<group>"; };
+		6EFB03B4213F70CC00A5BF69 /* OverImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OverImage.plist; sourceTree = "<group>"; };
+		6EFB03B6213F70F000A5BF69 /* PrepareImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PrepareImage.plist; sourceTree = "<group>"; };
 		6EFFDBDD21324EE0008A87F3 /* Tetris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tetris.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EFFDBE021324EE0008A87F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6EFFDBE121324EE0008A87F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -158,6 +183,25 @@
 		6EFFDCB52138189F008A87F3 /* SEB_mino7.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SEB_mino7.wav; sourceTree = "<group>"; };
 		6EFFDCB62138189F008A87F3 /* SEB_mino5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SEB_mino5.wav; sourceTree = "<group>"; };
 		6EFFDCB72138189F008A87F3 /* SEB_mino4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SEB_mino4.wav; sourceTree = "<group>"; };
+		6EFFDCC12138E89F008A87F3 /* GAME_OVER.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GAME_OVER.mp3; sourceTree = "<group>"; };
+		6EFFDCC22138E89F008A87F3 /* REMOVE_LINE.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = REMOVE_LINE.mp3; sourceTree = "<group>"; };
+		6EFFDCC32138E89F008A87F3 /* EXPLOSION.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = EXPLOSION.mp3; sourceTree = "<group>"; };
+		6EFFDCC42138E89F008A87F3 /* ENGINE.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ENGINE.wav; sourceTree = "<group>"; };
+		6EFFDCC52138E89F008A87F3 /* NEW_LEVEL.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NEW_LEVEL.mp3; sourceTree = "<group>"; };
+		6EFFDCC62138E89F008A87F3 /* PHYSICAL_BUTTON_SOUND.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PHYSICAL_BUTTON_SOUND.mp3; sourceTree = "<group>"; };
+		6EFFDCC72138E89F008A87F3 /* SIGNAL2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SIGNAL2.mp3; sourceTree = "<group>"; };
+		6EFFDCC82138E89F008A87F3 /* SIGNAL1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SIGNAL1.mp3; sourceTree = "<group>"; };
+		6EFFDCC92138E89F008A87F3 /* BRICK_FINISHEDMOVE.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BRICK_FINISHEDMOVE.mp3; sourceTree = "<group>"; };
+		6EFFDCCA2138E89F008A87F3 /* ROTATE_SOUND.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ROTATE_SOUND.mp3; sourceTree = "<group>"; };
+		6EFFDCCB2138E89F008A87F3 /* MOVE_SOUND.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MOVE_SOUND.mp3; sourceTree = "<group>"; };
+		6EFFDCD7213B0F0A008A87F3 /* SetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetViewController.h; sourceTree = "<group>"; };
+		6EFFDCD8213B0F0A008A87F3 /* SetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetViewController.m; sourceTree = "<group>"; };
+		6EFFDCDA213B0F2C008A87F3 /* SetVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetVM.h; sourceTree = "<group>"; };
+		6EFFDCDB213B0F2C008A87F3 /* SetVM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetVM.m; sourceTree = "<group>"; };
+		6EFFDCDD213B14A6008A87F3 /* CellM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CellM.h; sourceTree = "<group>"; };
+		6EFFDCDE213B14A6008A87F3 /* CellM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CellM.m; sourceTree = "<group>"; };
+		6EFFDCE3213B1C5E008A87F3 /* SetTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetTableViewCell.h; sourceTree = "<group>"; };
+		6EFFDCE4213B1C5E008A87F3 /* SetTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetTableViewCell.m; sourceTree = "<group>"; };
 		7A270718FEDAB7883D272630 /* Pods-Tetris.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tetris.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tetris/Pods-Tetris.debug.xcconfig"; sourceTree = "<group>"; };
 		A10DC0A5C74E2651D567D786 /* libPods-Tetris.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tetris.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -189,6 +233,15 @@
 				3E334A6294BE68DC8EC53EBB /* Pods-Tetris.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		6EFB03B1213F680800A5BF69 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				6EFB03B6213F70F000A5BF69 /* PrepareImage.plist */,
+				6EFB03B4213F70CC00A5BF69 /* OverImage.plist */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		6EFFDBD421324EE0008A87F3 = {
@@ -229,6 +282,10 @@
 			children = (
 				6EFFDC9021325A40008A87F3 /* MainViewController.h */,
 				6EFFDC9121325A40008A87F3 /* MainViewController.m */,
+				6EFFDCD7213B0F0A008A87F3 /* SetViewController.h */,
+				6EFFDCD8213B0F0A008A87F3 /* SetViewController.m */,
+				6E0FFBC6214126C4003FF3D6 /* SelectViewController.h */,
+				6E0FFBC7214126C4003FF3D6 /* SelectViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -242,6 +299,10 @@
 				6EFFDC9A2132BDDB008A87F3 /* TetrisVM.m */,
 				6EFFDCAB21353E97008A87F3 /* PreviewVM.h */,
 				6EFFDCAC21353E97008A87F3 /* PreviewVM.m */,
+				6EFFDCDA213B0F2C008A87F3 /* SetVM.h */,
+				6EFFDCDB213B0F2C008A87F3 /* SetVM.m */,
+				6E0FFBC9214126E3003FF3D6 /* SelectVM.h */,
+				6E0FFBCA214126E3003FF3D6 /* SelectVM.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -255,6 +316,8 @@
 				6EFFDCA02132C035008A87F3 /* ShapeM.m */,
 				6EFFDCA2213329FD008A87F3 /* SourceM.h */,
 				6EFFDCA3213329FD008A87F3 /* SourceM.m */,
+				6EFFDCDD213B14A6008A87F3 /* CellM.h */,
+				6EFFDCDE213B14A6008A87F3 /* CellM.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -268,6 +331,8 @@
 				6EFFDC9721328546008A87F3 /* TetrisV.m */,
 				6EFFDCA821352FD7008A87F3 /* PreviewV.h */,
 				6EFFDCA921352FD7008A87F3 /* PreviewV.m */,
+				6EFFDCE3213B1C5E008A87F3 /* SetTableViewCell.h */,
+				6EFFDCE4213B1C5E008A87F3 /* SetTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -275,6 +340,7 @@
 		6EFFDBFA21324F41008A87F3 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				6EFB03B1213F680800A5BF69 /* Data */,
 				6EFFDCAE2138189F008A87F3 /* Voice */,
 				6EFFDBFB21324F41008A87F3 /* System */,
 			);
@@ -433,6 +499,7 @@
 		6EFFDCAE2138189F008A87F3 /* Voice */ = {
 			isa = PBXGroup;
 			children = (
+				6EFFDCC02138E89F008A87F3 /* Tetris */,
 				6EFFDCAF2138189F008A87F3 /* Tetris_Effects */,
 			);
 			path = Voice;
@@ -451,6 +518,24 @@
 				6EFFDCB72138189F008A87F3 /* SEB_mino4.wav */,
 			);
 			path = Tetris_Effects;
+			sourceTree = "<group>";
+		};
+		6EFFDCC02138E89F008A87F3 /* Tetris */ = {
+			isa = PBXGroup;
+			children = (
+				6EFFDCC12138E89F008A87F3 /* GAME_OVER.mp3 */,
+				6EFFDCC22138E89F008A87F3 /* REMOVE_LINE.mp3 */,
+				6EFFDCC32138E89F008A87F3 /* EXPLOSION.mp3 */,
+				6EFFDCC42138E89F008A87F3 /* ENGINE.wav */,
+				6EFFDCC52138E89F008A87F3 /* NEW_LEVEL.mp3 */,
+				6EFFDCC62138E89F008A87F3 /* PHYSICAL_BUTTON_SOUND.mp3 */,
+				6EFFDCC72138E89F008A87F3 /* SIGNAL2.mp3 */,
+				6EFFDCC82138E89F008A87F3 /* SIGNAL1.mp3 */,
+				6EFFDCC92138E89F008A87F3 /* BRICK_FINISHEDMOVE.mp3 */,
+				6EFFDCCA2138E89F008A87F3 /* ROTATE_SOUND.mp3 */,
+				6EFFDCCB2138E89F008A87F3 /* MOVE_SOUND.mp3 */,
+			);
+			path = Tetris;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -514,15 +599,28 @@
 				6EFFDCBA2138189F008A87F3 /* SEB_mino3.wav in Resources */,
 				6EFFDBED21324EE2008A87F3 /* LaunchScreen.storyboard in Resources */,
 				6EFFDCBE2138189F008A87F3 /* SEB_mino5.wav in Resources */,
+				6EFFDCD62138E89F008A87F3 /* MOVE_SOUND.mp3 in Resources */,
+				6EFFDCCF2138E89F008A87F3 /* ENGINE.wav in Resources */,
 				6EFFDBEA21324EE2008A87F3 /* Assets.xcassets in Resources */,
 				6EFFDC3B21324F5A008A87F3 /* nav_return@2x.png in Resources */,
 				6EFFDBE821324EE0008A87F3 /* Main.storyboard in Resources */,
+				6EFFDCD12138E89F008A87F3 /* PHYSICAL_BUTTON_SOUND.mp3 in Resources */,
 				6EFFDCBB2138189F008A87F3 /* SEB_mino2.wav in Resources */,
+				6EFFDCD42138E89F008A87F3 /* BRICK_FINISHEDMOVE.mp3 in Resources */,
+				6EFFDCD02138E89F008A87F3 /* NEW_LEVEL.mp3 in Resources */,
 				6EFFDCBD2138189F008A87F3 /* SEB_mino7.wav in Resources */,
 				6EFFDCBF2138189F008A87F3 /* SEB_mino4.wav in Resources */,
 				6EFFDC3A21324F5A008A87F3 /* nav_return@3x.png in Resources */,
+				6EFB03B5213F70CC00A5BF69 /* OverImage.plist in Resources */,
+				6EFB03B7213F70F000A5BF69 /* PrepareImage.plist in Resources */,
+				6EFFDCD32138E89F008A87F3 /* SIGNAL1.mp3 in Resources */,
+				6EFFDCD22138E89F008A87F3 /* SIGNAL2.mp3 in Resources */,
+				6EFFDCCC2138E89F008A87F3 /* GAME_OVER.mp3 in Resources */,
 				6EFFDCB82138189F008A87F3 /* SEB_platinum.wav in Resources */,
+				6EFFDCCE2138E89F008A87F3 /* EXPLOSION.mp3 in Resources */,
 				6EFFDCB92138189F008A87F3 /* SEB_mino1.wav in Resources */,
+				6EFFDCD52138E89F008A87F3 /* ROTATE_SOUND.mp3 in Resources */,
+				6EFFDCCD2138E89F008A87F3 /* REMOVE_LINE.mp3 in Resources */,
 				6EFFDCBC2138189F008A87F3 /* SEB_mino6.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -559,6 +657,7 @@
 				6EFFDC4821324F5A008A87F3 /* BaseViewController.m in Sources */,
 				6EFFDC4D21324F5A008A87F3 /* UIView+Category.m in Sources */,
 				6EFFDC4B21324F5A008A87F3 /* UIImage+Category.m in Sources */,
+				6E0FFBC8214126C5003FF3D6 /* SelectViewController.m in Sources */,
 				6EFFDC9E2132BF09008A87F3 /* ItemM.m in Sources */,
 				6EFFDC4E21324F5A008A87F3 /* UILabel+Category.m in Sources */,
 				6EFFDC4021324F5A008A87F3 /* QSPTableViewCellVM.m in Sources */,
@@ -570,6 +669,8 @@
 				6EFFDC9521325ACC008A87F3 /* MainVM.m in Sources */,
 				6EFFDBF021324EE2008A87F3 /* main.m in Sources */,
 				6EFFDC5021324F5A008A87F3 /* NSObject+Category.m in Sources */,
+				6EFFDCDF213B14A6008A87F3 /* CellM.m in Sources */,
+				6EFFDCDC213B0F2C008A87F3 /* SetVM.m in Sources */,
 				6EFFDCAD21353E97008A87F3 /* PreviewVM.m in Sources */,
 				18DA9488213866C800070133 /* SoundPlayer.m in Sources */,
 				6EFFDC4321324F5A008A87F3 /* QSPTableViewCell.m in Sources */,
@@ -584,11 +685,14 @@
 				6EFFDC3921324F5A008A87F3 /* QSPNavigationController.m in Sources */,
 				6EFFDCA4213329FD008A87F3 /* SourceM.m in Sources */,
 				6EFFDC83213252B1008A87F3 /* BaseVM.m in Sources */,
+				6E0FFBCB214126E3003FF3D6 /* SelectVM.m in Sources */,
 				6EFFDC9221325A40008A87F3 /* MainViewController.m in Sources */,
 				6EFFDC3F21324F5A008A87F3 /* QSPTableViewVM.m in Sources */,
 				6EFFDC3D21324F5A008A87F3 /* QSPViewVM.m in Sources */,
 				6EFFDC4C21324F5A008A87F3 /* UIView+FrameAdjust.m in Sources */,
+				6EFFDCD9213B0F0A008A87F3 /* SetViewController.m in Sources */,
 				6EFFDC862132532A008A87F3 /* ElementV.m in Sources */,
+				6EFFDCE5213B1C5E008A87F3 /* SetTableViewCell.m in Sources */,
 				6EFFDC9821328546008A87F3 /* TetrisV.m in Sources */,
 				6EFFDC3821324F5A008A87F3 /* QSPKeyboardManager.m in Sources */,
 				6EFFDCAA21352FD7008A87F3 /* PreviewV.m in Sources */,
@@ -734,8 +838,9 @@
 			baseConfigurationReference = 7A270718FEDAB7883D272630 /* Pods-Tetris.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UV433VL8PE;
+				DEVELOPMENT_TEAM = 9365938T9Q;
 				GCC_PREFIX_HEADER = Tetris/Common/PrefixHeader.pch;
 				INFOPLIST_FILE = Tetris/Other/System/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -743,8 +848,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jiuchabaikaishui.www.Tetris;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiuchabaikaishui.jingbei.Tetris;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -754,8 +861,9 @@
 			baseConfigurationReference = 3E334A6294BE68DC8EC53EBB /* Pods-Tetris.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UV433VL8PE;
+				DEVELOPMENT_TEAM = 9365938T9Q;
 				GCC_PREFIX_HEADER = Tetris/Common/PrefixHeader.pch;
 				INFOPLIST_FILE = Tetris/Other/System/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -763,8 +871,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jiuchabaikaishui.www.Tetris;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiuchabaikaishui.jingbei.Tetris;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

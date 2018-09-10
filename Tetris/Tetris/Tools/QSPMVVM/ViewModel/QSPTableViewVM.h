@@ -42,7 +42,7 @@ typedef void (^QSPCreateObjectBlock)(id);
 @property (assign, nonatomic, readonly) Class cellClass;
 @property (strong, nonatomic, readonly) id cellHeight;
 
-+ (void)create:(void (^)(QSPTableViewVM *vm))block;
++ (instancetype)create:(void (^)(QSPTableViewVM *vm))block;
 - (QSPTableViewVM * (^)(QSPTableViewSectionVM *))addSectionVM;
 - (QSPTableViewVM * (^)(Class, QSPCreateObjectBlock))addSectionVMCreate;
 - (QSPTableViewVM * (^)(QSPCreateObjectBlock))addQSPSectionVMCreate;

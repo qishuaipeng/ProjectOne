@@ -17,6 +17,9 @@
         self.previewVM.shapeM = self.tetrisVM.shapeM;
         RAC(self.previewVM, type) = RACObserve(self.tetrisVM, type);
         _pauseCommand = [self emptyCommand];
+        _resetCommand = [self emptyCommand];
+        _soundCommand = [self emptyCommand];
+        _setCommand = [self emptyCommand];
         _upCommand = [self emptyCommand];
         _leftCommand = [self emptyCommand];
         _rightCommand = [self emptyCommand];

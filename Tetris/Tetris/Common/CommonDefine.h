@@ -47,8 +47,8 @@ typedef NS_ENUM(NSInteger, TetrisVMType) {
 #define K_ScreenScale_X              (K_Screen_Width/375)
 #define K_ScreenScale_Y_S              (K_Screen_Height > 667 ? 1 : K_Screen_Height/667)
 
-#define K_TetrisElementW             (10.0*K_ScreenScale_Y)//(K_Screen_Height == 480 ? 8.0 : K_Screen_Height == 568 ? 10.0 : K_Screen_Height == 667 ? 12.0 : K_Screen_Height == 736 ? 14.0 : 16.0)
-#define K_TetrisSpacing              (2.0*K_ScreenScale_Y)
+#define K_TetrisElementW             ((int)((K_Screen_Width - 21)/16.4) > (int)((K_Screen_Height - K_StatusHeight - K_TabBarHeight - 14)/25.45) ? (int)((K_Screen_Height - K_StatusHeight - K_TabBarHeight - 14)/25.45) : (int)((K_Screen_Width - 21)/16.4))//(10.0*K_ScreenScale_Y)//(K_Screen_Height == 480 ? 8.0 : K_Screen_Height == 568 ? 10.0 : K_Screen_Height == 667 ? 12.0 : K_Screen_Height == 736 ? 14.0 : 16.0)
+#define K_TetrisSpacing              (K_TetrisElementW*0.15)
 #define K_TetrisCount_H              10
 #define K_TetrisCount_V              22
 #define K_Tetris_PreviewCount        4
@@ -57,14 +57,14 @@ typedef NS_ENUM(NSInteger, TetrisVMType) {
 #define K_ScreenScale_X              (K_Screen_Width/375)
 
 
-#define K_ControllerView_Color      @"#ffffff".generateColor
+#define K_ControllerView_Color      [UIColor colorWithRed:242.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f]
 #define K_RandomColor          [UIColor colorWithRed:arc4random()%256/255.0f green:arc4random()%256/255.0f blue:arc4random()%256/255.0f alpha:1.0f]
 #define K_GrayColor(value)          [UIColor colorWithRed:value/255.0f green:value/255.0f blue:value/255.0f alpha:1.0f]
 #define K_GrayAlphaColor(value, a)          [UIColor colorWithRed:value/255.0f green:value/255.0f blue:value/255.0f alpha:a/1.0f]
 #define K_RGBColor(r, g, b)         [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
 #define K_RGBAColor(r, g, b, a)         [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a/1.0f]
 
-#define K_TetrisBackColor               @"67776a".generateColor
+#define K_TetrisBackColor               @"FFFFFF".generateColor
 #define K_TetrisForeColor               @"010601".generateColor
 
 #define K_PublicInformation          [PublicInformation shareInstance]

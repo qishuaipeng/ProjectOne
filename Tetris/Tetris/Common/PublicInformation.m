@@ -10,6 +10,9 @@
 #import "ReactiveObjC.h"
 
 #define K_Public_HighestScore                  @"K_Public_HighestScore"
+#define K_Public_Sound                  @"K_Public_Sound"
+#define K_Public_BeginSpeed                  @"K_Public_BeginSpeed"
+#define K_Public_NoFirst                  @"K_Public_NoFirst"
 
 
 static PublicInformation *_shareInstance;
@@ -52,6 +55,18 @@ static PublicInformation *_shareInstance;
         [RACObserve(self, highestScore) subscribeNext:^(id  _Nullable x) {
             [K_User_Defaults setInteger:self.highestScore forKey:K_Public_HighestScore];
         }];
+        self.sound = [K_User_Defaults integerForKey:K_Public_Sound];
+        [RACObserve(self, sound) subscribeNext:^(id  _Nullable x) {
+            [K_User_Defaults setInteger:self.highestScore forKey:K_Public_Sound];
+        }];
+        self.beginSpeed = [K_User_Defaults integerForKey:K_Public_BeginSpeed];
+        [RACObserve(self, beginSpeed) subscribeNext:^(id  _Nullable x) {
+            [K_User_Defaults setInteger:self.highestScore forKey:K_Public_BeginSpeed];
+        }];
+        self.noFirst = [K_User_Defaults boolForKey:K_Public_NoFirst];
+        if (!self.noFirst) {
+            self.sound = YES;
+        }
     }
 
     return self;

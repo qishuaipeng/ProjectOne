@@ -12,6 +12,7 @@
 #import "MainVM.h"
 #import "PreviewV.h"
 #import "SoundPlayer.h"
+#import "SetViewController.h"
 
 @interface VerticalButton : UIButton
 
@@ -20,11 +21,23 @@
 
 @implementation VerticalButton
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+//        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+//        self.backgroundColor = K_RandomColor;
+//        self.imageView.backgroundColor = K_RandomColor;
+//        self.titleLabel.backgroundColor = K_RandomColor;
+    }
+
+    return self;
+}
 - (CGRect)imageRectForContentRect:(CGRect)contentRect {
-    return CGRectMake(0, 0, contentRect.size.width, contentRect.size.width);
+    CGFloat W = 30*K_ScreenScale_X;
+    return CGRectMake((contentRect.size.width - W)/2.0, 0, W, W);
 }
 - (CGRect)titleRectForContentRect:(CGRect)contentRect {
-    return CGRectMake(0, contentRect.size.width, contentRect.size.width, contentRect.size.height - contentRect.size.width);
+    CGFloat Y = 30*K_ScreenScale_X;
+    return CGRectMake(0, Y, contentRect.size.width, contentRect.size.height - Y);
 }
 
 @end
@@ -34,10 +47,12 @@
 @property (strong, nonatomic) MainVM *vm;
 @property (weak, nonatomic) UIView *screenV;
 @property (weak, nonatomic) TetrisV *tetrisV;
+@property (weak, nonatomic) PreviewV *previewV;
 @property (weak, nonatomic) UILabel *scoreL;
 @property (weak, nonatomic) UILabel *highestL;
 @property (weak, nonatomic) UILabel *speedL;
-@property (weak, nonatomic) PreviewV *previewV;
+@property (weak, nonatomic) UIImageView *soundIV;
+@property (weak, nonatomic) UIImageView *pauseIV;
 @property (weak, nonatomic) UIButton *resetB;
 @property (weak, nonatomic) UIButton *soundB;
 @property (weak, nonatomic) UIButton *setB;
@@ -47,17 +62,94 @@
 @property (weak, nonatomic) UIButton *rightB;
 @property (weak, nonatomic) UIButton *downB;
 @property (weak, nonatomic) UIButton *rotationB;
+@property (weak, nonatomic) UIImageView *prepareIV;
+@property (weak, nonatomic) UIImageView *resetIV;
+@property (weak, nonatomic) UIImageView *overIV;
 
 @end
 
 @implementation MainViewController
 
+- (NSArray *)resetImages {
+    CGFloat spacing = K_TetrisSpacing;
+    NSMutableArray *mArr = [NSMutableArray arrayWithCapacity:1];
+    CGFloat W = K_TetrisElementW*K_TetrisCount_H + spacing*(K_TetrisCount_H - 1) + spacing*2;
+    CGFloat H = K_TetrisElementW*K_TetrisCount_V + spacing*(K_TetrisCount_V - 1) + spacing*2;
+    UIGraphicsBeginImageContext(CGSizeMake(W, H));
+    for (NSInteger section = K_TetrisCount_V - 1; section >= 0; section--) {
+        for (NSInteger row = 0; row < K_TetrisCount_H; row++) {
+            [K_PublicInformation.elementImage drawInRect:CGRectMake(spacing + (spacing + K_TetrisElementW)*row, spacing + (spacing + K_TetrisElementW)*section, K_TetrisElementW, K_TetrisElementW)];
+        }
+        [mArr addObject:UIGraphicsGetImageFromCurrentImageContext()];
+    }
+    UIGraphicsEndImageContext();
+    
+    NSMutableArray *endArr = [NSMutableArray arrayWithArray:mArr];
+    [endArr addObjectsFromArray:[[mArr reverseObjectEnumerator] allObjects]];
+    
+    return endArr;
+}
+- (UIImage *)overImage {
+    CGFloat spacing = K_TetrisSpacing;
+    NSArray *arr = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"OverImage" ofType:@"plist"]];
+    CGFloat W = K_TetrisElementW*K_TetrisCount_H + spacing*(K_TetrisCount_H - 1) + spacing*2;
+    CGFloat H = K_TetrisElementW*K_TetrisCount_V + spacing*(K_TetrisCount_V - 1) + spacing*2;
+    UIGraphicsBeginImageContext(CGSizeMake(W, H));
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [K_TetrisBackColor setFill];
+    CGContextFillRect(context, CGRectMake(spacing, spacing, W - spacing*2, H - spacing*2));
+    UIImage *image = [ConFunc image:K_PublicInformation.elementImage andAlpha:0.2];
+    for (NSInteger section = 0; section < K_TetrisCount_V; section++) {
+        for (NSInteger row = 0; row < K_TetrisCount_H; row++) {
+            CGRect rect = CGRectMake(spacing + row*(K_TetrisElementW + spacing), spacing + section*(K_TetrisElementW + spacing), K_TetrisElementW, K_TetrisElementW);
+            [image drawInRect:rect];
+        }
+    }
+    for (NSDictionary *dic in arr) {
+        NSInteger section = [dic[@"section"] integerValue];
+        NSInteger row = [dic[@"row"] integerValue];
+        [K_PublicInformation.elementImage drawInRect:CGRectMake(spacing + (spacing + K_TetrisElementW)*row, spacing + (spacing + K_TetrisElementW)*section, K_TetrisElementW, K_TetrisElementW)];
+    }
+    UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return returnImage;
+}
+- (UIImage *)prepareImage {
+    CGFloat spacing = K_TetrisSpacing;
+    NSArray *arr = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"PrepareImage" ofType:@"plist"]];
+    CGFloat W = K_TetrisElementW*K_TetrisCount_H + spacing*(K_TetrisCount_H - 1) + spacing*2;
+    CGFloat H = K_TetrisElementW*K_TetrisCount_V + spacing*(K_TetrisCount_V - 1) + spacing*2;
+    UIGraphicsBeginImageContext(CGSizeMake(W, H));
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    [K_TetrisBackColor setFill];
+//    CGContextFillRect(context, CGRectMake(spacing, spacing, W - spacing*2, H - spacing*2));
+//    UIImage *image = [ConFunc image:K_PublicInformation.elementImage andAlpha:0.2];
+//    for (NSInteger section = 0; section < K_TetrisCount_V; section++) {
+//        for (NSInteger row = 0; row < K_TetrisCount_H; row++) {
+//            CGRect rect = CGRectMake(spacing + row*(K_TetrisElementW + spacing), spacing + section*(K_TetrisElementW + spacing), K_TetrisElementW, K_TetrisElementW);
+//            [image drawInRect:rect];
+//        }
+//    }
+    for (NSDictionary *dic in arr) {
+        NSInteger section = [dic[@"section"] integerValue];
+        NSInteger row = [dic[@"row"] integerValue];
+        [K_PublicInformation.elementImage drawInRect:CGRectMake(spacing + (spacing + K_TetrisElementW)*row, spacing + (spacing + K_TetrisElementW)*(section + 3), K_TetrisElementW, K_TetrisElementW)];
+    }
+    UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return returnImage;
+}
 - (MainVM *)vm {
     if (_vm == nil) {
         _vm = [[MainVM alloc] init];
     }
     
     return _vm;
+}
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 + (instancetype)controllerWithVM:(MainVM *)vm {
     return [[self alloc] initWithVM:vm];
@@ -70,32 +162,77 @@
     return self;
 }
 
+- (void)effectsAnimation {
+    [UIView animateKeyframesWithDuration:1 delay:0.0 options:UIViewKeyframeAnimationOptionRepeat animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0.4 relativeDuration:0 animations:^{
+            self.prepareIV.alpha = 0.0;
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.9 relativeDuration:0 animations:^{
+            self.prepareIV.alpha = 1.0;
+        }];
+    } completion:^(BOOL finished) {
+    }];
+    [UIView animateKeyframesWithDuration:1 delay:0.0 options:UIViewKeyframeAnimationOptionRepeat animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0.4 relativeDuration:0 animations:^{
+            self.pauseIV.alpha = 0.0;
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.9 relativeDuration:0 animations:^{
+            self.pauseIV.alpha = 1.0;
+        }];
+    } completion:^(BOOL finished) {
+    }];
+    [UIView animateKeyframesWithDuration:2 delay:0.0 options:UIViewKeyframeAnimationOptionRepeat animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0.4 relativeDuration:0 animations:^{
+            self.overIV.alpha = 0.0;
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.9 relativeDuration:0 animations:^{
+            self.overIV.alpha = 1.0;
+        }];
+    } completion:^(BOOL finished) {
+    }];
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleDefault;
+    return UIStatusBarStyleLightContent;
 }
 - (BOOL)prefersStatusBarHidden {
-    return YES;
+    return !self.vm.statusBarShow;
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    self.vm.statusBarShow = YES;
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    self.vm.statusBarShow = NO;
+    [self setNeedsStatusBarAppearanceUpdate];
+    [self effectsAnimation];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self settingUI];
     [self bindViewModel];
+    [self.vm.resetCommand execute:self.resetB];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(effectsAnimation) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 - (void)settingUI {
-    UIImageView *backIV = [[UIImageView alloc] init];
-    backIV.image = [UIImage imageNamed:@"tetris_back"];
-    [self.view addSubview:backIV];
-    [backIV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view);
-        make.top.equalTo(self.view);
-        make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
-    }];
+//    UIImageView *backIV = [[UIImageView alloc] init];
+//    backIV.image = [UIImage imageNamed:@"tetris_back"];
+//    [self.view addSubview:backIV];
+//    [backIV mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.view);
+//        make.top.equalTo(self.view);
+//        make.right.equalTo(self.view);
+//        make.bottom.equalTo(self.view);
+//    }];
     
     CGFloat spacing = K_TetrisSpacing;
     UIView *screenV = [[UIView alloc] init];
@@ -106,9 +243,9 @@
     self.screenV = screenV;
     [screenV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
-        make.top.equalTo(self.view).offset(20 + K_StatusMoreHeight);
-        make.width.equalTo(@(K_TetrisElementW*K_TetrisCount_H + spacing*(K_TetrisCount_H - 1) + spacing*2 + K_TetrisElementW*4 + spacing*(4 - 1) + spacing*4 + 17));
-        make.height.equalTo(@(K_TetrisElementW*K_TetrisCount_V + spacing*(K_TetrisCount_V - 1) + spacing*4 + 10));
+        make.top.equalTo(self.view).offset(K_StatusHeight);
+        make.width.equalTo(@(K_TetrisElementW*K_TetrisCount_H + spacing*(K_TetrisCount_H - 1) + spacing*2 + K_TetrisElementW*4 + spacing*(4 - 1) + spacing*2 + 21));
+        make.height.equalTo(@(K_TetrisElementW*K_TetrisCount_V + spacing*(K_TetrisCount_V - 1) + spacing*2 + 14));
     }];
     
     UIView *boxV = [[UIView alloc] init];
@@ -131,7 +268,40 @@
         make.height.equalTo(@(K_TetrisElementW*K_TetrisCount_V + spacing*(K_TetrisCount_V - 1) + spacing*2));
     }];
     
-    UIFont *font = K_SystemFont(12);
+    UIImageView *prepareIV = [[UIImageView alloc] init];
+    prepareIV.image = [self prepareImage];
+    [self.view addSubview:prepareIV];
+    self.prepareIV = prepareIV;
+    [prepareIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(tetrisV);
+        make.right.equalTo(tetrisV);
+        make.top.equalTo(tetrisV);
+        make.bottom.equalTo(tetrisV);
+    }];
+    
+    UIImageView *resetIV = [[UIImageView alloc] init];
+    [self.view addSubview:resetIV];
+    self.resetIV = resetIV;
+    [resetIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(tetrisV);
+        make.right.equalTo(tetrisV);
+        make.top.equalTo(tetrisV);
+        make.bottom.equalTo(tetrisV);
+    }];
+    
+    UIImageView *overIV = [[UIImageView alloc] init];
+    overIV.image = [self overImage];
+    [self.view addSubview:overIV];
+    self.overIV = overIV;
+    [overIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(tetrisV);
+        make.right.equalTo(tetrisV);
+        make.top.equalTo(tetrisV);
+        make.bottom.equalTo(tetrisV);
+    }];
+    
+    UIFont *font = K_SystemFont(12*K_ScreenScale_Y);
+    CGFloat height = 15*K_ScreenScale_Y;
     UILabel *nextL = [[UILabel alloc] init];
     nextL.text = @"下一个：";
     nextL.font = font;
@@ -161,9 +331,9 @@
     [self.view addSubview:scoreVL];
     [scoreVL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(tetrisV.mas_right).offset(5);
-        make.top.equalTo(previewV.mas_bottom).offset(spacing + K_TetrisElementW);
+        make.top.equalTo(previewV.mas_bottom).offset(K_TetrisElementW);
         make.right.equalTo(screenV).offset(-7);
-        make.height.equalTo(@(15));
+        make.height.equalTo(@(height));
     }];
     
     UILabel *scoreL = [[UILabel alloc] init];
@@ -176,7 +346,7 @@
         make.left.equalTo(tetrisV.mas_right).offset(5);
         make.top.equalTo(scoreVL.mas_bottom).offset(0);
         make.right.equalTo(screenV).offset(-7);
-        make.height.equalTo(@(15));
+        make.height.equalTo(@(height));
     }];
     
     UILabel *highestVL = [[UILabel alloc] init];
@@ -186,9 +356,9 @@
     [self.view addSubview:highestVL];
     [highestVL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(tetrisV.mas_right).offset(5);
-        make.top.equalTo(scoreL.mas_bottom).offset(spacing + K_TetrisElementW);
+        make.top.equalTo(scoreL.mas_bottom).offset(K_TetrisElementW);
         make.right.equalTo(screenV).offset(-7);
-        make.height.equalTo(@(15));
+        make.height.equalTo(@(height));
     }];
     
     UILabel *highestL = [[UILabel alloc] init];
@@ -201,7 +371,7 @@
         make.left.equalTo(tetrisV.mas_right).offset(5);
         make.top.equalTo(highestVL.mas_bottom).offset(0);
         make.right.equalTo(screenV).offset(-7);
-        make.height.equalTo(@(15));
+        make.height.equalTo(@(height));
     }];
     
     UILabel *speedVL = [[UILabel alloc] init];
@@ -211,9 +381,9 @@
     [self.view addSubview:speedVL];
     [speedVL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(tetrisV.mas_right).offset(5);
-        make.top.equalTo(highestL.mas_bottom).offset(spacing + K_TetrisElementW);
+        make.top.equalTo(highestL.mas_bottom).offset(K_TetrisElementW);
         make.right.equalTo(screenV).offset(-7);
-        make.height.equalTo(@(15));
+        make.height.equalTo(@(height));
     }];
     
     UILabel *speedL = [[UILabel alloc] init];
@@ -229,93 +399,149 @@
         make.height.equalTo(@(15));
     }];
     
+//    UIImageView *soundIV = [[UIImageView alloc] init];
+//    soundIV.image = K_PublicInformation.sound ? [UIImage imageNamed:@"Sound12"] : [UIImage imageNamed:@"Sound22"];
+//    soundIV.contentMode = UIViewContentModeScaleAspectFit;
+//    [self.view addSubview:soundIV];
+//    self.soundIV = soundIV;
+    CGFloat width = K_TetrisElementW*2 + spacing;
+//    [soundIV mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(tetrisV.mas_right).offset(5);
+//        make.bottom.equalTo(tetrisV);
+//        make.width.equalTo(@(width));
+//        make.height.equalTo(@(width*soundIV.image.size.height/soundIV.image.size.width));
+//    }];
+//
+//    UIImageView *pauseIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Paused2"]];
+//    pauseIV.contentMode = UIViewContentModeScaleAspectFit;
+//    [self.view addSubview:pauseIV];
+//    self.pauseIV = pauseIV;
+//    width += 5 + spacing;
+//    [pauseIV mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(screenV).offset(-7);
+//        make.bottom.equalTo(tetrisV);
+//        make.width.equalTo(@(width));
+//        make.height.equalTo(@(width*soundIV.image.size.height/soundIV.image.size.width));
+//    }];
+    
     UIButton *pauseB = [VerticalButton buttonWithType:UIButtonTypeCustom];
     [pauseB setTitle:@"开始" forState:UIControlStateNormal];
-    pauseB.titleLabel.font = K_SystemFont(12);
+    pauseB.titleLabel.font = font;
+    [pauseB setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     pauseB.titleLabel.textAlignment = NSTextAlignmentCenter;
     [pauseB setImage:[UIImage imageNamed:@"tetris_red"] forState:UIControlStateNormal];
     [self.view addSubview:pauseB];
     self.pauseB = pauseB;
+    width = K_TetrisElementW*2 + spacing;
     [pauseB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.view).offset(-44);
-        make.top.equalTo(boxV.mas_bottom).offset(10);
-        make.width.equalTo(@(30));
-        make.height.equalTo(@(50));
+        make.left.equalTo(tetrisV.mas_right).offset(5 + spacing);
+        make.bottom.equalTo(tetrisV);
+        make.width.equalTo(@(width));
+        make.height.equalTo(@(50*K_ScreenScale_X));
     }];
+//    [pauseB mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self.view).offset(-44);
+//        make.top.equalTo(boxV.mas_bottom).offset(10);
+//        make.width.equalTo(@(30));
+//        make.height.equalTo(@(50));
+//    }];
     
     UIButton *resetB = [VerticalButton buttonWithType:UIButtonTypeCustom];
     [resetB setTitle:@"重置" forState:UIControlStateNormal];
-    resetB.titleLabel.font = K_SystemFont(12);
+    resetB.titleLabel.font = font;
+    [resetB setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [resetB setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     resetB.titleLabel.textAlignment = NSTextAlignmentCenter;
     [resetB setImage:[UIImage imageNamed:@"tetris_green"] forState:UIControlStateNormal];
     [self.view addSubview:resetB];
     self.resetB = resetB;
     [resetB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(pauseB.mas_left).offset(-15);
-        make.top.equalTo(boxV.mas_bottom).offset(10);
-        make.width.equalTo(@(30));
-        make.height.equalTo(@(50));
+        make.left.equalTo(pauseB.mas_right).offset(spacing);
+        make.bottom.equalTo(tetrisV);
+        make.width.equalTo(pauseB);
+        make.height.equalTo(pauseB);
     }];
-    
+//    [resetB mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(pauseB.mas_left).offset(-15);
+//        make.top.equalTo(boxV.mas_bottom).offset(10);
+//        make.width.equalTo(@(30));
+//        make.height.equalTo(@(50));
+//    }];
+
     UIButton *soundB = [VerticalButton buttonWithType:UIButtonTypeCustom];
     [soundB setTitle:@"音效" forState:UIControlStateNormal];
-    soundB.titleLabel.font = K_SystemFont(12);
+    soundB.titleLabel.font = font;
+    [soundB setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     soundB.titleLabel.textAlignment = NSTextAlignmentCenter;
     [soundB setImage:[UIImage imageNamed:@"tetris_blue"] forState:UIControlStateNormal];
     [self.view addSubview:soundB];
     self.soundB = soundB;
     [soundB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(resetB.mas_left).offset(-15);
-        make.top.equalTo(boxV.mas_bottom).offset(10);
-        make.width.equalTo(@(30));
-        make.height.equalTo(@(50));
+        make.left.equalTo(pauseB);
+        make.bottom.equalTo(pauseB.mas_top).offset(-5);
+        make.width.equalTo(pauseB);
+        make.height.equalTo(pauseB);
     }];
-    
+//    [soundB mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(resetB.mas_left).offset(-15);
+//        make.top.equalTo(boxV.mas_bottom).offset(10);
+//        make.width.equalTo(@(30));
+//        make.height.equalTo(@(50));
+//    }];
+
     UIButton *setB = [VerticalButton buttonWithType:UIButtonTypeCustom];
     [setB setTitle:@"设置" forState:UIControlStateNormal];
-    setB.titleLabel.font = K_SystemFont(12);
+    setB.titleLabel.font = font;
+    [setB setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     setB.titleLabel.textAlignment = NSTextAlignmentCenter;
     [setB setImage:[UIImage imageNamed:@"tetris_yellow"] forState:UIControlStateNormal];
     [self.view addSubview:setB];
     self.setB = setB;
     [setB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(soundB.mas_left).offset(-30);
-        make.top.equalTo(boxV.mas_bottom).offset(10);
-        make.width.equalTo(@(30));
-        make.height.equalTo(@(50));
+        make.left.equalTo(resetB);
+        make.bottom.equalTo(resetB.mas_top).offset(-5);
+        make.width.equalTo(resetB);
+        make.height.equalTo(resetB);
     }];
-    
-//    UIButton *upB = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [upB setTitle:@"U" forState:UIControlStateNormal];
-//    [upB setBackgroundImage:[UIImage imageWithColor:[UIColor cyanColor]] forState:UIControlStateNormal];
-//    [self.view addSubview:upB];
-//    self.upB = upB;
-//    [upB mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(tetrisV);
-//        make.top.equalTo(tetrisV.mas_bottom).offset(10);
-//        make.width.equalTo(@(44));
-//        make.height.equalTo(@(44));
+//    [setB mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(soundB.mas_left).offset(-30);
+//        make.top.equalTo(boxV.mas_bottom).offset(10);
+//        make.width.equalTo(@(30));
+//        make.height.equalTo(@(50));
 //    }];
+
+////    UIButton *upB = [UIButton buttonWithType:UIButtonTypeCustom];
+////    [upB setTitle:@"U" forState:UIControlStateNormal];
+////    [upB setBackgroundImage:[UIImage imageWithColor:[UIColor cyanColor]] forState:UIControlStateNormal];
+////    [self.view addSubview:upB];
+////    self.upB = upB;
+////    [upB mas_makeConstraints:^(MASConstraintMaker *make) {
+////        make.centerX.equalTo(tetrisV);
+////        make.top.equalTo(tetrisV.mas_bottom).offset(10);
+////        make.width.equalTo(@(44));
+////        make.height.equalTo(@(44));
+////    }];
     
     UIButton *lefB = [UIButton buttonWithType:UIButtonTypeCustom];
     [lefB setBackgroundImage:[UIImage imageNamed:@"tetris_left"] forState:UIControlStateNormal];
     [self.view addSubview:lefB];
     self.leftB = lefB;
+    CGFloat W = K_Screen_Width >320 ? 44*K_ScreenScale_X : 44;
     [lefB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).offset(44);
+        make.left.equalTo(self.view).offset(W);
         make.top.equalTo(pauseB.mas_bottom).offset(K_Screen_Height <= 480 ? 10 : 44*K_ScreenScale_Y);
-        make.width.equalTo(@(44));
-        make.height.equalTo(@(44));
+        make.width.equalTo(@(W));
+        make.height.equalTo(@(W));
     }];
     UIButton *rightB = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightB setBackgroundImage:[UIImage imageNamed:@"tetris_right"] forState:UIControlStateNormal];
     [self.view addSubview:rightB];
     self.rightB = rightB;
     [rightB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(lefB.mas_right).offset(44);
+        make.left.equalTo(lefB.mas_right).offset(W);
         make.top.equalTo(lefB);
-        make.width.equalTo(@(44));
-        make.height.equalTo(@(44));
+        make.width.equalTo(@(W));
+        make.height.equalTo(@(W));
     }];
     
     UIButton *downB = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -325,8 +551,8 @@
     [downB mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(lefB.mas_right);
         make.top.equalTo(lefB.mas_bottom);
-        make.width.equalTo(@(44));
-        make.height.equalTo(@(44));
+        make.width.equalTo(@(W));
+        make.height.equalTo(@(W));
     }];
     
     UIButton *rotationB = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -334,10 +560,10 @@
     [self.view addSubview:rotationB];
     self.rotationB = rotationB;
     [rotationB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.view).offset(-44);
+        make.right.equalTo(self.view).offset(-W);
         make.top.equalTo(lefB).offset(10);
-        make.width.equalTo(@(66));
-        make.height.equalTo(@(66));
+        make.width.equalTo(@(66*K_ScreenScale_Y));
+        make.height.equalTo(@(66*K_ScreenScale_Y));
     }];
 }
 - (void)bindViewModel {
@@ -361,13 +587,17 @@
     }];
     [RACObserve(self.vm.tetrisVM, type) subscribeNext:^(id  _Nullable x) {
         @strongify(self);
-        if (self.vm.tetrisVM.type == TetrisVMTypePlaying) {
+        if (self.vm.tetrisVM.type == TetrisVMTypePaused) {
+            [self.pauseB setTitle:@"继续" forState:UIControlStateNormal];
+        } else if (self.vm.tetrisVM.type == TetrisVMTypePlaying) {
             [self.pauseB setTitle:@"暂停" forState:UIControlStateNormal];
-        } else if (self.vm.tetrisVM.type == TetrisVMTypePaused) {
-            [self.pauseB setTitle:@"开始" forState:UIControlStateNormal];
         } else {
             [self.pauseB setTitle:@"开始" forState:UIControlStateNormal];
         }
+        
+        self.prepareIV.hidden = self.vm.tetrisVM.type != TetrisVMTypePrepare;
+        self.pauseIV.hidden = self.vm.tetrisVM.type != TetrisVMTypePaused;
+        self.overIV.hidden = self.vm.tetrisVM.type != TetrisVMTypeOver;
     }];
     self.pauseB.rac_command = self.vm.pauseCommand;
     [self.vm.pauseCommand.executionSignals subscribeNext:^(id  _Nullable x) {
@@ -377,35 +607,66 @@
         } else {
             [self.tetrisV start];
         }
+        [SoundPlayer tetrisPhysicalSoundPlaying];
     }];
-    self.upB.rac_command = self.vm.upCommand;
-    [self.vm.upCommand.executionSignals subscribeNext:^(id  _Nullable x) {
+    self.resetB.rac_command = self.vm.resetCommand;
+    [self.vm.resetCommand.executionSignals subscribeNext:^(id  _Nullable x) {
         @strongify(self);
-        [self.tetrisV upMove];
+        if (!self.resetIV.isAnimating) {
+            if (!self.resetIV.animationImages) {
+                [self.resetIV setAnimationImages:[self resetImages]];
+                [self.resetIV setAnimationDuration:2];
+                [self.resetIV setAnimationRepeatCount:1];
+            }
+            [self.resetIV startAnimating];
+            [SoundPlayer tetrisNewSoundPlaying];
+            [self.tetrisV reset];
+        }
     }];
-    self.leftB.rac_command = self.vm.leftCommand;
-    [self.vm.leftCommand.executionSignals subscribeNext:^(id  _Nullable x) {
+    self.soundB.rac_command = self.vm.soundCommand;
+    [self.vm.soundCommand.executionSignals subscribeNext:^(id  _Nullable x) {
         @strongify(self);
-        [self.tetrisV leftMove];
-        [SoundPlayer tetrisMoveSoundPlaying];
+        K_PublicInformation.sound = !K_PublicInformation.sound;
+        self.soundIV.image = [UIImage imageNamed:K_PublicInformation.sound ? @"Sound12" : @"Sound22"];
+        [SoundPlayer tetrisPhysicalSoundPlaying];
     }];
-    self.rightB.rac_command = self.vm.rightCommand;
-    [self.vm.rightCommand.executionSignals subscribeNext:^(id  _Nullable x) {
+    self.setB.rac_command = self.vm.setCommand;
+    [self.vm.setCommand.executionSignals subscribeNext:^(id  _Nullable x) {
         @strongify(self);
-        [self.tetrisV rightMove];
+        [SoundPlayer tetrisPhysicalSoundPlaying];
+        SetViewController *nextCtr = [SetViewController controllerWithVM:[[SetVM alloc] init]];
+        [self.navigationController pushViewController:nextCtr animated:YES];
     }];
-    self.downB.rac_command = self.vm.downCommand;
-    [self.vm.downCommand.executionSignals subscribeNext:^(id  _Nullable x) {
-        @strongify(self);
-        do {
-            
-        } while ([self.tetrisV downMove]);
-    }];
-    self.rotationB.rac_command = self.vm.rotationCommand;
-    [self.vm.rotationCommand.executionSignals subscribeNext:^(id  _Nullable x) {
-        @strongify(self);
-        [self.tetrisV rotationShape];
-    }];
+//    self.upB.rac_command = self.vm.upCommand;
+//    [self.vm.upCommand.executionSignals subscribeNext:^(id  _Nullable x) {
+//        @strongify(self);
+//        [self.tetrisV upMove];
+//    }];
+//    self.leftB.rac_command = self.vm.leftCommand;
+//    [self.vm.leftCommand.executionSignals subscribeNext:^(id  _Nullable x) {
+//        @strongify(self);
+//        [self.tetrisV leftMove];
+//        [SoundPlayer tetrisMoveSoundPlaying];
+//    }];
+//    self.rightB.rac_command = self.vm.rightCommand;
+//    [self.vm.rightCommand.executionSignals subscribeNext:^(id  _Nullable x) {
+//        @strongify(self);
+//        [self.tetrisV rightMove];
+//        [SoundPlayer tetrisMoveSoundPlaying];
+//    }];
+//    self.downB.rac_command = self.vm.downCommand;
+//    [self.vm.downCommand.executionSignals subscribeNext:^(id  _Nullable x) {
+//        @strongify(self);
+//        do {
+//
+//        } while ([self.tetrisV downMove]);
+//    }];
+//    self.rotationB.rac_command = self.vm.rotationCommand;
+//    [self.vm.rotationCommand.executionSignals subscribeNext:^(id  _Nullable x) {
+//        @strongify(self);
+//        [self.tetrisV rotationShape];
+//        [SoundPlayer tetrisRotationSoundPlaying];
+//    }];
 }
 
 @end

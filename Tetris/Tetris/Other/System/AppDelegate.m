@@ -20,8 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:K_Screen_Bounds];
     QSPNavigationController *navCtr = [[QSPNavigationController alloc] initWithRootViewController:[MainViewController controllerWithVM:[[MainVM alloc] init]]];
-    [navCtr.navigationBar setBackgroundImage:[UIImage imageWithColor:K_RGBColor(250,175,44) andSize:CGSizeMake(K_Screen_Width, navCtr.navigationBar.bounds.size.height)]
-                               forBarMetrics:UIBarMetricsDefault];
+    [navCtr.navigationBar setBackgroundImage:[UIImage imageWithColor:K_RGBColor(58,61,65) andSize:CGSizeMake(K_Screen_Width, K_NavBarHeight)] forBarMetrics:UIBarMetricsDefault];
     [navCtr.navigationBar setTitleTextAttributes:@{NSFontAttributeName: K_SystemBoldFont(19), NSForegroundColorAttributeName: K_GrayColor(254)}];
     [navCtr.navigationBar setShadowImage:nil];
     navCtr.returnImage = [UIImage imageNamed:@"return_key"];
