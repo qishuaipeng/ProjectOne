@@ -12,6 +12,7 @@
 #define K_Public_HighestScore                  @"K_Public_HighestScore"
 #define K_Public_Sound                  @"K_Public_Sound"
 #define K_Public_BeginSpeed                  @"K_Public_BeginSpeed"
+#define K_Public_TetrisType                  @"K_Public_TetrisType"
 #define K_Public_NoFirst                  @"K_Public_NoFirst"
 
 
@@ -55,18 +56,26 @@ static PublicInformation *_shareInstance;
         [RACObserve(self, highestScore) subscribeNext:^(id  _Nullable x) {
             [K_User_Defaults setInteger:self.highestScore forKey:K_Public_HighestScore];
         }];
-        self.sound = [K_User_Defaults integerForKey:K_Public_Sound];
+        self.sound = [K_User_Defaults boolForKey:K_Public_Sound];
         [RACObserve(self, sound) subscribeNext:^(id  _Nullable x) {
-            [K_User_Defaults setInteger:self.highestScore forKey:K_Public_Sound];
+            [K_User_Defaults setBool:self.sound forKey:K_Public_Sound];
+            [K_User_Defaults synchronize];
         }];
         self.beginSpeed = [K_User_Defaults integerForKey:K_Public_BeginSpeed];
         [RACObserve(self, beginSpeed) subscribeNext:^(id  _Nullable x) {
-            [K_User_Defaults setInteger:self.highestScore forKey:K_Public_BeginSpeed];
+            [K_User_Defaults setInteger:self.beginSpeed forKey:K_Public_BeginSpeed];
+            [K_User_Defaults synchronize];
+        }];
+        self.tetrisType = [K_User_Defaults integerForKey:K_Public_TetrisType];
+        [RACObserve(self, tetrisType) subscribeNext:^(id  _Nullable x) {
+            [K_User_Defaults setInteger:self.tetrisType forKey:K_Public_TetrisType];
+            [K_User_Defaults synchronize];
         }];
         self.noFirst = [K_User_Defaults boolForKey:K_Public_NoFirst];
-        if (!self.noFirst) {
-            self.sound = YES;
-        }
+        [RACObserve(self, noFirst) subscribeNext:^(id  _Nullable x) {
+            [K_User_Defaults setBool:self.noFirst forKey:K_Public_NoFirst];
+            [K_User_Defaults synchronize];
+        }];
     }
 
     return self;

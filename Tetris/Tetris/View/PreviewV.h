@@ -10,6 +10,9 @@
 #import "PreviewVM.h"
 
 @interface PreviewV : BaseV
+
 @property (strong, nonatomic) PreviewVM *vm;
+
+- (void)reload;
 
 @end

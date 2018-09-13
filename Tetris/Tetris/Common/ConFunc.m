@@ -52,6 +52,9 @@
     return nil;
 }
 + (UIImage *)elementImage {
+    return [self elementImageWithColor:K_TetrisForeColor];
+}
++ (UIImage *)elementImageWithColor:(UIColor *)color {
     CGFloat SW = K_TetrisElementW;
     CGFloat SH = K_TetrisElementW;
     CGFloat scale = 0.6;
@@ -62,8 +65,8 @@
     CGFloat X = (SW - W)/2.0;
     CGFloat Y = (SH - H)/2.0;
     CGContextAddRect(context, CGRectMake(X, Y, W, H));
-    [K_TetrisForeColor setFill];
-    [K_TetrisForeColor setStroke];
+    [color setFill];
+    [color setStroke];
     CGContextFillPath(context);
     
     UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, SW, SH) cornerRadius:0];//(1 - scale)*SW/2.0

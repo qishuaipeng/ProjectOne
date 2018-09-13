@@ -14,6 +14,7 @@
     if (self = [super init]) {
         self.count = K_Tetris_PreviewCount;
         self.shapeM = [ShapeM randomShape];
+        self.showBack = YES;
     }
     
     return self;

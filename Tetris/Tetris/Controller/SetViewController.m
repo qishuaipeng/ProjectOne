@@ -8,6 +8,9 @@
 
 #import "SetViewController.h"
 #import "SelectViewController.h"
+#import "TeachViewController.h"
+#import "QSPNavigationController.h"
+#import "ModeViewController.h"
 
 @interface SetViewController ()
 
@@ -64,8 +67,20 @@
     @weakify(self);
     [self.tableView.vm.didSelectRowSignal subscribeNext:^(QSPTableViewAndIndexPath *obj) {
         @strongify(self);
-        SelectViewController *nextCtr = [SelectViewController controllerWithVM:[SelectVM selectVMWithM:[obj.tableView.vm rowVMWithIndexPath:obj.indexPath].dataM]];
-        [self.navigationController pushViewController:nextCtr animated:YES];
+        if (obj.indexPath.row == 0) {
+            ModeViewController *nextCtr = [ModeViewController controllerWithVM:[[ModeVM alloc] init]];
+            RAC(nextCtr.vm, tetrisVMType) = RACObserve(self.vm, tetrisVMType);
+            [self.navigationController pushViewController:nextCtr animated:YES];
+        } else if (obj.indexPath.row == 1) {
+            TeachViewController *nextCtr = [TeachViewController controllerWithVM:[TeachVM teachVMWithType:TeachVMTypeTap]];
+            QSPNavigationController *nav = [[QSPNavigationController alloc] initWithRootViewController:nextCtr];
+            [self presentViewController:nav animated:YES completion:^{
+                
+            }];
+        } else {
+            SelectViewController *nextCtr = [SelectViewController controllerWithVM:[SelectVM selectVMWithM:[obj.tableView.vm rowVMWithIndexPath:obj.indexPath].dataM]];
+            [self.navigationController pushViewController:nextCtr animated:YES];
+        }
     }];
 }
 

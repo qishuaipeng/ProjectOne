@@ -23,6 +23,7 @@
 + (NSString *)currentApplicationVersion;
 + (UIView *)firstResponderFrom:(UIView *)view;
 + (UIImage *)elementImage;
++ (UIImage *)elementImageWithColor:(UIColor *)color;
 + (UIImage *)image:(UIImage *)image andAlpha:(CGFloat )alpha;
 
 @end

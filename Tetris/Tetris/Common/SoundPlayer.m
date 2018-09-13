@@ -35,12 +35,6 @@ static NSMutableDictionary *_soundIDs;
     [session setCategory:AVAudioSessionCategoryAmbient error:nil];
     //激活会话
     [session setActive:YES error:nil];
-    
-    [RACObserve(K_PublicInformation, sound) subscribeNext:^(id  _Nullable x) {
-        if (!K_PublicInformation.sound) {
-            [self removeSoundIDs];
-        }
-    }];
 }
 
 + (void)tetrisMoveSoundPlaying {
@@ -78,9 +72,11 @@ static NSMutableDictionary *_soundIDs;
     if ([ConFunc blankOfStr:fileName]) {
         return;
     }
-    SystemSoundID soundID = [self achieveSoundID:fileName];
-    if (soundID && K_PublicInformation.sound) {
-        AudioServicesPlaySystemSound(soundID);
+    if (K_PublicInformation.sound) {
+        SystemSoundID soundID = [self achieveSoundID:fileName];
+        if (soundID) {
+            AudioServicesPlaySystemSound(soundID);
+        }
     }
 }
 /**

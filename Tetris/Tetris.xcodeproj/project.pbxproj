@@ -10,6 +10,11 @@
 		18DA9488213866C800070133 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DA9487213866C800070133 /* SoundPlayer.m */; };
 		6E0FFBC8214126C5003FF3D6 /* SelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0FFBC7214126C4003FF3D6 /* SelectViewController.m */; };
 		6E0FFBCB214126E3003FF3D6 /* SelectVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0FFBCA214126E3003FF3D6 /* SelectVM.m */; };
+		6E40F2542149242600171DAA /* ModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E40F2532149242600171DAA /* ModeViewController.m */; };
+		6E40F2572149247400171DAA /* ModeVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E40F2562149247400171DAA /* ModeVM.m */; };
+		6E40F25A21492A3500171DAA /* ModeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E40F25921492A3500171DAA /* ModeTableViewCell.m */; };
+		6E793B482146BE480046A989 /* TeachViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E793B472146BE480046A989 /* TeachViewController.m */; };
+		6E793B4B2146BE900046A989 /* TeachVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E793B4A2146BE900046A989 /* TeachVM.m */; };
 		6EFB03B5213F70CC00A5BF69 /* OverImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB03B4213F70CC00A5BF69 /* OverImage.plist */; };
 		6EFB03B7213F70F000A5BF69 /* PrepareImage.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6EFB03B6213F70F000A5BF69 /* PrepareImage.plist */; };
 		6EFFDBE221324EE0008A87F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EFFDBE121324EE0008A87F3 /* AppDelegate.m */; };
@@ -89,6 +94,16 @@
 		6E0FFBC7214126C4003FF3D6 /* SelectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectViewController.m; sourceTree = "<group>"; };
 		6E0FFBC9214126E3003FF3D6 /* SelectVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectVM.h; sourceTree = "<group>"; };
 		6E0FFBCA214126E3003FF3D6 /* SelectVM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectVM.m; sourceTree = "<group>"; };
+		6E40F2522149242600171DAA /* ModeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModeViewController.h; sourceTree = "<group>"; };
+		6E40F2532149242600171DAA /* ModeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModeViewController.m; sourceTree = "<group>"; };
+		6E40F2552149247400171DAA /* ModeVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModeVM.h; sourceTree = "<group>"; };
+		6E40F2562149247400171DAA /* ModeVM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModeVM.m; sourceTree = "<group>"; };
+		6E40F25821492A3500171DAA /* ModeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModeTableViewCell.h; sourceTree = "<group>"; };
+		6E40F25921492A3500171DAA /* ModeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModeTableViewCell.m; sourceTree = "<group>"; };
+		6E793B462146BE480046A989 /* TeachViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TeachViewController.h; sourceTree = "<group>"; };
+		6E793B472146BE480046A989 /* TeachViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TeachViewController.m; sourceTree = "<group>"; };
+		6E793B492146BE900046A989 /* TeachVM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TeachVM.h; sourceTree = "<group>"; };
+		6E793B4A2146BE900046A989 /* TeachVM.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TeachVM.m; sourceTree = "<group>"; };
 		6EFB03B4213F70CC00A5BF69 /* OverImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OverImage.plist; sourceTree = "<group>"; };
 		6EFB03B6213F70F000A5BF69 /* PrepareImage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PrepareImage.plist; sourceTree = "<group>"; };
 		6EFFDBDD21324EE0008A87F3 /* Tetris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tetris.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -286,6 +301,10 @@
 				6EFFDCD8213B0F0A008A87F3 /* SetViewController.m */,
 				6E0FFBC6214126C4003FF3D6 /* SelectViewController.h */,
 				6E0FFBC7214126C4003FF3D6 /* SelectViewController.m */,
+				6E793B462146BE480046A989 /* TeachViewController.h */,
+				6E793B472146BE480046A989 /* TeachViewController.m */,
+				6E40F2522149242600171DAA /* ModeViewController.h */,
+				6E40F2532149242600171DAA /* ModeViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -303,6 +322,10 @@
 				6EFFDCDB213B0F2C008A87F3 /* SetVM.m */,
 				6E0FFBC9214126E3003FF3D6 /* SelectVM.h */,
 				6E0FFBCA214126E3003FF3D6 /* SelectVM.m */,
+				6E793B492146BE900046A989 /* TeachVM.h */,
+				6E793B4A2146BE900046A989 /* TeachVM.m */,
+				6E40F2552149247400171DAA /* ModeVM.h */,
+				6E40F2562149247400171DAA /* ModeVM.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -333,6 +356,8 @@
 				6EFFDCA921352FD7008A87F3 /* PreviewV.m */,
 				6EFFDCE3213B1C5E008A87F3 /* SetTableViewCell.h */,
 				6EFFDCE4213B1C5E008A87F3 /* SetTableViewCell.m */,
+				6E40F25821492A3500171DAA /* ModeTableViewCell.h */,
+				6E40F25921492A3500171DAA /* ModeTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -661,7 +686,9 @@
 				6EFFDC9E2132BF09008A87F3 /* ItemM.m in Sources */,
 				6EFFDC4E21324F5A008A87F3 /* UILabel+Category.m in Sources */,
 				6EFFDC4021324F5A008A87F3 /* QSPTableViewCellVM.m in Sources */,
+				6E793B4B2146BE900046A989 /* TeachVM.m in Sources */,
 				6EFFDC4421324F5A008A87F3 /* QSPTableViewFooterView.m in Sources */,
+				6E40F2572149247400171DAA /* ModeVM.m in Sources */,
 				6EFFDC4621324F5A008A87F3 /* PublicInformation.m in Sources */,
 				6EFFDC3E21324F5A008A87F3 /* QSPTableViewSectionVM.m in Sources */,
 				6EFFDC8F21325699008A87F3 /* BaseV.m in Sources */,
@@ -687,6 +714,9 @@
 				6EFFDC83213252B1008A87F3 /* BaseVM.m in Sources */,
 				6E0FFBCB214126E3003FF3D6 /* SelectVM.m in Sources */,
 				6EFFDC9221325A40008A87F3 /* MainViewController.m in Sources */,
+				6E40F25A21492A3500171DAA /* ModeTableViewCell.m in Sources */,
+				6E40F2542149242600171DAA /* ModeViewController.m in Sources */,
+				6E793B482146BE480046A989 /* TeachViewController.m in Sources */,
 				6EFFDC3F21324F5A008A87F3 /* QSPTableViewVM.m in Sources */,
 				6EFFDC3D21324F5A008A87F3 /* QSPViewVM.m in Sources */,
 				6EFFDC4C21324F5A008A87F3 /* UIView+FrameAdjust.m in Sources */,

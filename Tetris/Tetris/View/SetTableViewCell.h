@@ -10,4 +10,9 @@
 
 @interface SetTableViewCell : QSPTableViewCell
 
+@property (weak, nonatomic, readonly) UIImageView *iconIV;
+@property (weak, nonatomic, readonly) UILabel *titleL;
+@property (weak, nonatomic, readonly) UILabel *subL;
+@property (weak, nonatomic, readonly) UIImageView *arrowIV;
+
 @end

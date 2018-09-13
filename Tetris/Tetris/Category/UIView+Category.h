@@ -11,5 +11,7 @@
 @interface UIView (Category)
 
 - (UITapGestureRecognizer *)addTapWithBlock:(void (^)(UIView *view, UITapGestureRecognizer *tap))block;
+- (UISwipeGestureRecognizer *)addSwipeWithBlock:(void (^)(UIView *view, UISwipeGestureRecognizer *swipe))block;
+- (UIPanGestureRecognizer *)addPanWithBlock:(void (^)(UIView *view, UIPanGestureRecognizer *pan))block;
 
 @end

@@ -14,5 +14,6 @@
 @property (assign, nonatomic) NSInteger count;
 @property (strong, nonatomic) ShapeM *shapeM;
 @property (assign, nonatomic) TetrisVMType type;
+@property (assign, nonatomic) BOOL showBack;
 
 @end

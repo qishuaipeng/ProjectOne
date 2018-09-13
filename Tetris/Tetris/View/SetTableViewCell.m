@@ -12,11 +12,6 @@
 
 @interface SetTableViewCell ()
 
-@property (weak, nonatomic) UIImageView *iconIV;
-@property (weak, nonatomic) UILabel *titleL;
-@property (weak, nonatomic) UILabel *subL;
-@property (weak, nonatomic) UIImageView *arrowIV;
-
 @end
 
 @implementation SetTableViewCell
@@ -26,15 +21,28 @@
         super.cellVMSet(vm);
         
         CellM *model = (CellM *)vm.dataM;
-        if (![ConFunc blankOfStr:model.icon]) {
-            self.iconIV.image = [UIImage imageNamed:model.icon];
-        }
-        self.titleL.text = model.title;
-        [self.titleL mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@([self.titleL.text sizeWithWidth:CGFLOAT_MAX andFont:self.titleL.font].width + 1));
+        @weakify(self);
+        [RACObserve(model, icon) subscribeNext:^(id  _Nullable x) {
+            if (![ConFunc blankOfStr:model.icon]) {
+                @strongify(self);
+                self.iconIV.image = [UIImage imageNamed:model.icon];
+            }
         }];
-        self.subL.text = model.subTitle;
-        self.arrowIV.hidden = !model.arrow;
+        [RACObserve(model, title) subscribeNext:^(id  _Nullable x) {
+            @strongify(self);
+            self.titleL.text = model.title;
+            [self.titleL mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.width.equalTo(@([self.titleL.text sizeWithWidth:CGFLOAT_MAX andFont:self.titleL.font].width + 1));
+            }];
+        }];
+        [RACObserve(model, subTitle) subscribeNext:^(id  _Nullable x) {
+            @strongify(self);
+            self.subL.text = model.subTitle;
+        }];
+        [RACObserve(model, arrow) subscribeNext:^(id  _Nullable x) {
+            @strongify(self);
+            self.arrowIV.hidden = !model.arrow;
+        }];
         
         return self;
     };
@@ -44,7 +52,7 @@
         UIImageView *iconIV = [[UIImageView alloc] init];
         iconIV.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView addSubview:iconIV];
-        self.iconIV = iconIV;
+        _iconIV = iconIV;
         [iconIV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).offset(8);
             make.top.equalTo(self.contentView).offset(10);
@@ -57,7 +65,7 @@
         arrowIV.image = image;
         arrowIV.contentMode = UIViewContentModeRight;
         [self.contentView addSubview:arrowIV];
-        self.arrowIV = arrowIV;
+        _arrowIV = arrowIV;
         [arrowIV mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView);
             make.right.equalTo(self.contentView).offset(-8);
@@ -69,7 +77,7 @@
         titleL.font = K_SystemFont(15);
         titleL.textColor = K_GrayColor(51);
         [self.contentView addSubview:titleL];
-        self.titleL = titleL;
+        _titleL = titleL;
         [titleL mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(iconIV.mas_right).offset(8);
             make.top.equalTo(self.contentView);
@@ -82,7 +90,7 @@
         subL.textColor = K_GrayColor(153);
         subL.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:subL];
-        self.subL = subL;
+        _subL = subL;
         [subL mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(titleL.mas_right).offset(8);
             make.right.equalTo(arrowIV.mas_left).offset(-8);

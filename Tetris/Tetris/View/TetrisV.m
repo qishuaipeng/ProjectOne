@@ -68,7 +68,7 @@ static NSInteger timeCount = 0;
 - (void)linkAction:(CADisplayLink *)sender {
     timeCount++;
     if (timeCount%(30 - 2*self.vm.speed) == 0) {
-        if (self.vm && self.vm.type == TetrisVMTypePlaying && (!self.vm.removeAnimating) && (![self downMove])) {
+        if (self.vm && self.vm.type == TetrisVMTypePlaying && (!self.vm.removeAnimating) && [self downMove]) {
         }
         timeCount = 0;
     }

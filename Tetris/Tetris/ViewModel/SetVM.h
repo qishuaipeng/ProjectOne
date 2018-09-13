@@ -12,6 +12,7 @@
 @interface SetVM : BaseVM
 
 @property (copy, nonatomic) NSString *title;
+@property (assign, nonatomic) TetrisVMType tetrisVMType;
 @property (strong, nonatomic) QSPTableViewVM *tableViewVM;
 @property (assign, nonatomic) BOOL statusBarHidden;
 

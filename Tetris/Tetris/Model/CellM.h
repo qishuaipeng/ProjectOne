@@ -14,5 +14,6 @@
 @property (copy, nonatomic) NSString *title;
 @property (copy, nonatomic) NSString *subTitle;
 @property (assign, nonatomic) BOOL arrow;
+@property (assign, nonatomic) BOOL selected;
 
 @end

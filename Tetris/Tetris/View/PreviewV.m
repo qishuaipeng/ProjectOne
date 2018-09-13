@@ -73,12 +73,14 @@
     return self;
 }
 - (void)drawRect:(CGRect)rect {
-    CGFloat spacing = K_TetrisSpacing;
-    UIImage *image = [ConFunc image:K_PublicInformation.elementImage andAlpha:0.2];
-    for (NSInteger section = 0; section < K_Tetris_PreviewCount; section++) {
-        for (NSInteger row = 0; row < K_Tetris_PreviewCount; row++) {
-            CGRect rect = CGRectMake(spacing + row*(K_TetrisElementW + spacing), spacing + section*(K_TetrisElementW + spacing), K_TetrisElementW, K_TetrisElementW);
-            [image drawInRect:rect];
+    if (self.vm.showBack) {
+        CGFloat spacing = K_TetrisSpacing;
+        UIImage *image = [ConFunc image:K_PublicInformation.elementImage andAlpha:0.2];
+        for (NSInteger section = 0; section < K_Tetris_PreviewCount; section++) {
+            for (NSInteger row = 0; row < K_Tetris_PreviewCount; row++) {
+                CGRect rect = CGRectMake(spacing + row*(K_TetrisElementW + spacing), spacing + section*(K_TetrisElementW + spacing), K_TetrisElementW, K_TetrisElementW);
+                [image drawInRect:rect];
+            }
         }
     }
 }
@@ -91,24 +93,31 @@
         @strongify(self);
         [self nextAction:nil];
     }];
+    [RACObserve(self.vm, showBack) subscribeNext:^(id  _Nullable x) {
+        @strongify(self);
+        [self setNeedsDisplay];
+    }];
 }
 - (void)nextAction:(NSNotification *)sender {
     if (self.vm.type == TetrisVMTypePaused || self.vm.type == TetrisVMTypePlaying) {
-        CGFloat spacing = K_TetrisSpacing;
-        NSIndexPath *indexPath = [self.vm.shapeM indexPathOfNextWithIndex:0];
-        NSIndexPath *location = [NSIndexPath indexPathForRow:0 inSection:-indexPath.section];
-        self.firstV.frameX = spacing + (location.row + indexPath.row)*(spacing + K_TetrisElementW);
-        self.firstV.frameY = spacing + (location.section + indexPath.section)*(spacing + K_TetrisElementW);
-        indexPath = [self.vm.shapeM indexPathOfNextWithIndex:1];
-        self.secondV.frameX = spacing + (location.row + indexPath.row)*(spacing + K_TetrisElementW);
-        self.secondV.frameY = spacing + (location.section + indexPath.section)*(spacing + K_TetrisElementW);
-        indexPath = [self.vm.shapeM indexPathOfNextWithIndex:2];
-        self.thirdV.frameX = spacing + (location.row + indexPath.row)*(spacing + K_TetrisElementW);
-        self.thirdV.frameY = spacing + (location.section + indexPath.section)*(spacing + K_TetrisElementW);
-        indexPath = [self.vm.shapeM indexPathOfNextWithIndex:3];
-        self.fourthV.frameX = spacing + (location.row + indexPath.row)*(spacing + K_TetrisElementW);
-        self.fourthV.frameY = spacing + (location.section + indexPath.section)*(spacing + K_TetrisElementW);
+        [self reload];
     }
+}
+- (void)reload {
+    CGFloat spacing = K_TetrisSpacing;
+    NSIndexPath *indexPath = [self.vm.shapeM indexPathOfNextWithIndex:0];
+    NSIndexPath *location = [NSIndexPath indexPathForRow:0 inSection:-indexPath.section];
+    self.firstV.frameX = spacing + (location.row + indexPath.row)*(spacing + K_TetrisElementW);
+    self.firstV.frameY = spacing + (location.section + indexPath.section)*(spacing + K_TetrisElementW);
+    indexPath = [self.vm.shapeM indexPathOfNextWithIndex:1];
+    self.secondV.frameX = spacing + (location.row + indexPath.row)*(spacing + K_TetrisElementW);
+    self.secondV.frameY = spacing + (location.section + indexPath.section)*(spacing + K_TetrisElementW);
+    indexPath = [self.vm.shapeM indexPathOfNextWithIndex:2];
+    self.thirdV.frameX = spacing + (location.row + indexPath.row)*(spacing + K_TetrisElementW);
+    self.thirdV.frameY = spacing + (location.section + indexPath.section)*(spacing + K_TetrisElementW);
+    indexPath = [self.vm.shapeM indexPathOfNextWithIndex:3];
+    self.fourthV.frameX = spacing + (location.row + indexPath.row)*(spacing + K_TetrisElementW);
+    self.fourthV.frameY = spacing + (location.section + indexPath.section)*(spacing + K_TetrisElementW);
 }
 
 @end

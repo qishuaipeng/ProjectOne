@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, TetrisVMType) {
 #define K_RGBAColor(r, g, b, a)         [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a/1.0f]
 
 #define K_TetrisBackColor               @"FFFFFF".generateColor
-#define K_TetrisForeColor               @"010601".generateColor
+#define K_TetrisForeColor               @"010601".generateColor//@"ff00f6".generateColor//
 
 #define K_PublicInformation          [PublicInformation shareInstance]
 #define K_User_Defaults              [NSUserDefaults standardUserDefaults]

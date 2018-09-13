@@ -22,7 +22,19 @@
                     cellVM.dataMCreate(CellM.class, ^(CellM *model){
                         model.title = @"模式";
                         model.icon = @"mode";
-                        model.subTitle = @"经典";
+                        [RACObserve(K_PublicInformation, tetrisType) subscribeNext:^(id  _Nullable x) {
+                            switch (K_PublicInformation.tetrisType) {
+                                case TetrisTypeNormal:
+                                    model.subTitle = @"经典";
+                                    break;
+                                case TetrisTypeReverse:
+                                    model.subTitle = @"逆向";
+                                    break;
+                                    
+                                default:
+                                    break;
+                            }
+                        }];
                         model.arrow = YES;
                     });
                 }).addQSPRowVMCreate(^(QSPTableViewCellVM *cellVM){
@@ -43,7 +55,7 @@
                     cellVM.dataMCreate(CellM.class, ^(CellM *model){
                         model.title = @"皮肤";
                         model.icon = @"background";
-                        model.subTitle = @"经典黑";
+                        model.subTitle = @"国风墨";
                         model.arrow = YES;
                     });
                 });

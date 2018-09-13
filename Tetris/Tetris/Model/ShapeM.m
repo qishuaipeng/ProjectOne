@@ -11,7 +11,7 @@
 @implementation ShapeM
 
 + (instancetype)randomShape {
-    return [self shapeMWithType:arc4random()%2 == 0 ? arc4random()%7 : arc4random()%6 direction:arc4random()%4 nextType:arc4random()%2 == 0 ? arc4random()%7 : arc4random()%6 andNextDirection:arc4random()%4];
+    return [self shapeMWithType:arc4random()%7 direction:arc4random()%4 nextType:arc4random()%7 andNextDirection:arc4random()%4];
 }
 + (instancetype)shapeMWithType:(ShapeMType)type direction:(ShapeMDirection)direction nextType:(ShapeMType)nType andNextDirection:(ShapeMDirection)nDirection {
     return [[self alloc] initMWithType:type direction:direction nextType:nType andNextDirection:nDirection];
@@ -30,7 +30,7 @@
 }
 - (void)nextRandom {
     ShapeMType type = arc4random()%7;
-    [self nextWithType:type == ShapeMType6 ? (arc4random()%2 == 0 ? type : arc4random()%7) : type andDirection:arc4random()%4];
+    [self nextWithType:type andDirection:arc4random()%4];//type == ShapeMType6 ? (arc4random()%2 == 0 ? type : arc4random()%7) : type
 }
 - (void)nextWithType:(ShapeMType)type andDirection:(ShapeMDirection)direction {
     _type = _nextType;
@@ -50,7 +50,7 @@
     [self reloadWithType:self.type direction:self.direction andNext:NO];
 }
 - (void)rotationNext {
-    _nextDirection = (self.direction + 1)%4;
+    _nextDirection = (self.nextDirection + 1)%4;
     [self reloadWithType:self.nextType direction:self.nextDirection andNext:YES];
 }
 - (void)changedWithType:(ShapeMType)type andDirection:(ShapeMDirection)direction {

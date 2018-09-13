@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "QSPNavigationController.h"
+#import "TeachViewController.h"
 
 @interface AppDelegate ()
 
@@ -19,14 +20,28 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:K_Screen_Bounds];
+    if (!K_PublicInformation.noFirst) {
+        K_PublicInformation.noFirst = YES;
+        K_PublicInformation.tetrisType = TetrisTypeReverse;
+        K_PublicInformation.sound = YES;
+        TeachViewController *nextCtr = [TeachViewController controllerWithVM:[TeachVM teachVMWithType:TeachVMTypeTap]];
+        QSPNavigationController *navCtr = [[QSPNavigationController alloc] initWithRootViewController:nextCtr];
+        self.window.rootViewController = navCtr;
+    } else {
+        [self gotoMainController];
+    }
+    
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+- (void)gotoMainController {
     QSPNavigationController *navCtr = [[QSPNavigationController alloc] initWithRootViewController:[MainViewController controllerWithVM:[[MainVM alloc] init]]];
     [navCtr.navigationBar setBackgroundImage:[UIImage imageWithColor:K_RGBColor(58,61,65) andSize:CGSizeMake(K_Screen_Width, K_NavBarHeight)] forBarMetrics:UIBarMetricsDefault];
     [navCtr.navigationBar setTitleTextAttributes:@{NSFontAttributeName: K_SystemBoldFont(19), NSForegroundColorAttributeName: K_GrayColor(254)}];
     [navCtr.navigationBar setShadowImage:nil];
     navCtr.returnImage = [UIImage imageNamed:@"return_key"];
     self.window.rootViewController = navCtr;
-    
-    return YES;
 }
 
 
